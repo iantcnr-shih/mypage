@@ -1,0 +1,57 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Zen+Old+Mincho&display=swap');
+
+body {
+    font-family: "Zen Old Mincho", serif;
+}
+
+:root {
+    --mycolor01: #BDBDBF;
+    --mycolor02: #5580A0;
+    --mycolor03: #CC8A4D;
+    --mycolor04: #432B33;
+    /* 原始基礎色 */
+    --mycolor01: #BDBDBF; /* 混凝土灰 */
+    --mycolor02: #5580A0; /* 冷藍牆面 */
+    --mycolor03: #CC8A4D; /* 生鏽橘 */
+    --mycolor04: #432B33; /* 暗酒紅 */
+
+    /* 🔥 新創 Grunge Graffiti 色 */
+    --grunge-ash-dust: #9A9A9C;      /* 灰塵灰｜老牆粉塵 */
+    --grunge-rain-wall: #3F647D;    /* 雨水牆藍｜被雨刷過的塗鴉 */
+    --grunge-rust-blood: #A45E32;   /* 鐵鏽血橘｜生鏽鐵門 */
+    --grunge-dark-wine: #2E1C22;    /* 暗紅酒漬｜夜裡的牆角 */
+
+    --grunge-smog-blue: #6F8FA5;    /* 霧霾藍｜城市空氣 */
+    --grunge-broken-concrete: #7F7F82; /* 破裂水泥 */
+    --grunge-burnt-tag: #8B4A1F;    /* 焦痕塗鴉｜被燒過的噴漆 */
+    --grunge-alley-shadow: #1F1418; /* 巷弄陰影 */
+    --grunge-faded-spray: #D6A777;  /* 退色噴漆 */
+    --grunge-night-asphalt: #2A343C;/* 夜色柏油路 */
+}
+
+/* 文字相關 */
+.fw-100 { font-weight: 100; }
+.fw-200 { font-weight: 200; }
+.fw-300 { font-weight: 300; }
+.fw-400 { font-weight: 400; }
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+.fw-700 { font-weight: 700; }
+.fw-800 { font-weight: 800; }
+.fw-900 { font-weight: 900; }
+
+.title-01 {
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--grunge-ash-dust);
+    text-shadow: 2px 2px var(--grunge-rain-wall),
+    4px 4px 8px rgba(0,0,0,0.6);
+    letter-spacing: 3px;
+}
+
+.title-02 {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--grunge-burnt-tag);
+}
