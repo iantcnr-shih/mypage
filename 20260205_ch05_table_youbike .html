@@ -1,0 +1,119 @@
+<!-- 1. 抓取youbike資料
+2. 自行印出內容並了解含意
+3. 使用 table 將重要的資料列表
+    ex: 站點名稱, 可借車輛數, 已借出車輛數, 更新時間 ... 等 -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北市 youbike 站點資訊</title>
+    <link rel="stylesheet" href="css/mycss01.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        table thead,
+        table tbody tr td {
+            text-align: center;
+        }
+        @media screen and (max-width: 768px) {
+           .table-rwd thead {
+            display: none;
+           }
+           .table-rwd tbody tr {
+            display: block;
+            border: 2px solid rgb(44, 58, 80);
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 4px 5px 5px rgba(25,33,46,0.7);
+           } 
+           .table-rwd tbody tr td {
+            display: block;
+            overflow: hidden;
+           }
+           .table-rwd tbody tr td::before {
+            content: attr(data-th)" : ";
+            color: var(--grunge-dark-wine);
+            font-size: 16px;
+            font-weight: 900;
+            display: block;
+            float: left;
+            width: 27%;
+            text-align: right;
+            padding-right: 1.5em;
+           }
+           .table-rwd tbody tr td span {
+            display: block;
+            float: left;
+            width: 73%;
+           }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-01 text-center">台北市 youbike 站點資訊</div>
+    <div class="container">
+        <table class="table table-rwd">
+            <thead class="table-success">
+                <tr>
+                    <th>站點編號</th>
+                    <th>站點區域</th>
+                    <th>站點名稱</th>
+                    <th>站點地址</th>
+                    <th>已借數量</th>
+                    <th>可借數量</th>
+                    <th>停車總數</th>
+                    <th>即時時間</th>
+                </tr>
+            </thead>
+            <tbody id="mytablebody">
+                <tr>
+                    <td data-th="站點編號"><span>500101001</span></td>
+                    <td data-th="站點區域"><span>大安區</span></td>
+                    <td data-th="站點名稱"><span>捷運科技大樓站</span></td>
+                    <td data-th="站點地址"><span>復興南路二段235號前</span></td>
+                    <td data-th="已借數量"><span>3</span></td>
+                    <td data-th="可借數量"><span>25</span></td>
+                    <td data-th="停車總數"><span>28</span></td>
+                    <td data-th="更新時間"><span>2026-02-05 15:13:52</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        // 主程式
+        $(function(){
+            // 串接opendata
+            $.ajax({
+                type: "GET",
+                url: "js/json/youbike_immediate.json",
+                dataType: "json",
+                success: showdata,
+                error: function(){
+                    console.log("連線錯誤!");
+                }
+            });
+        });
+        function showdata(data){
+            console.log(data);
+            $("#mytablebody").empty();
+            data.forEach(function(item){
+                let strHTML = `
+                    <tr>
+                        <td data-th="站點編號"><span>${item.sno}</span></td>
+                        <td data-th="站點區域"><span>${item.sarea}</span></td>
+                        <td data-th="站點名稱"><span>${item.sna.replace("YouBike2.0_", "")}</span></td>
+                        <td data-th="站點地址"><span>${item.ar}</span></td>
+                        <td data-th="已借數量"><span>${item.available_rent_bikes}</span></td>
+                        <td data-th="可借數量"><span>${item.available_return_bikes}</span></td>
+                        <td data-th="停車總數"><span>${item.Quantity}</span></td>
+                        <td data-th="更新時間"><span>${item.srcUpdateTime}</span></td>
+                    </tr>
+                    `
+                $("#mytablebody").append( strHTML );
+            });
+        }
+    </script>
+</body>
+</html>
