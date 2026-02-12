@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ch5. 表格 (opendata 應用)</title>
+    <link rel="stylesheet" href="css/mycss01.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        table img {
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.3);
+        }
+        @media screen and (max-width: 768px) {
+           .table-rwd thead {
+            display: none;
+           }
+           .table-rwd tbody tr {
+            display: block;
+            border: 2px solid rgb(44, 58, 80);
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 4px 5px 5px rgba(25,33,46,0.7);
+           } 
+           .table-rwd tbody tr td {
+            display: block;
+            overflow: hidden;
+           }
+           .table-rwd tbody tr td::before {
+            content: attr(data-th)" : ";
+            color: var(--grunge-dark-wine);
+            font-size: 16px;
+            font-weight: 900;
+            display: block;
+            float: left;
+            width: 27%;
+            text-align: right;
+            padding-right: 1.5em;
+           }
+           .table-rwd tbody tr td span {
+            display: block;
+            float: left;
+            width: 73%;
+           }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-01 text-center" id="mytitle">表格 - opendata 應用</div>
+    <div class="container">
+        <table class="table table-rwd">
+            <thead class="table-success">
+                <tr>
+                    <th>店家編號</th>
+                    <th>店家圖片</th>
+                    <th>店家名稱</th>
+                    <th>店家地址</th>
+                    <th>店家電話</th>
+                    <th>店家簡介</th>
+                </tr>
+            </thead>
+            <tbody id="mytablebody">
+                <tr>
+                    <td data-th="店家編號"><span>001</span></td>
+                    <td data-th="店家圖片">
+                        <span><img src="images/dog01.avif" width="200px" alt=""></span>
+                    </td>
+                    <td data-th="店家名稱"><span>紅茶</span></td>
+                    <td data-th="店家地址"><span><s>35</s></span></td>
+                    <td data-th="店家電話"><span>3</span></td>
+                    <td data-th="店家簡介"><span>地位你還全部蘋果旅遊東方多種，用品民眾渠道相應年代渠道上來發言可用適合，律師外貿半年夏天，不需要不在充滿現代化望着醫生三人臺中，要有桃園和平上門最佳尤其忍不住，點此人物老公轉貼，建立祝福笑道證明尊重，日常爆炸，文學下一頁聯想業主做出能不能最好地理，帶著生產調節，說道說到連續階段男生更多福州手中電話東京龍岡回事，並且非常請點擊平時，各級奇怪，整合手指一副望着權威苗栗本網尊重光碟手裡電子商務線路，問題對象排行榜望着按鈕，轉載第二形象主營娛樂超級未知作業主演果然衝擊家電或者技能，但是之下幫我時尚很多人有時傢俱員工，演唱暫無事項有所患者不夠唱片坐在類別前進溝通，帳號怎麼辦戰略適用天堂，人間果然圖像化。</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        // 主程式
+        $(function(){
+            $("#mytitle").html("地方美食店家列表");
+
+            console.log("hello world!!");
+
+            // 串接opendata
+            $.ajax({
+                type: "GET",
+                url: "https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvTravelFood.aspx?IsTransData=1&UnitId=193",
+                dataType: "json",
+                success: showdata,
+                error: function(){
+                    console.log("連線錯誤!");
+                }
+            });
+        });
+        function showdata(data){
+            console.log(data);
+            $("#mytablebody").empty();
+            // data.forEach(function(item){
+            //     console.log(item.Name);
+            //     console.log("地址：" + item.City + item.Town + item.Address);
+
+            //     let img = item.PicURL ? item.PicURL : "images/dog03.avif"
+            //     let strHTML = `
+            //         <tr>
+            //              <td data-th="店家編號"><span>${item.ID}</span></td>
+            //              <td data-th="店家圖片">
+            //                  <span><img src="${img}" width="200px" alt=""></span>
+            //              </td>
+            //              <td data-th="店家名稱"><span>${item.Name}</span></td>
+            //              <td data-th="店家地址"><span>${item.City + item.Town + item.Address}</span></td>
+            //              <td data-th="店家電話"><span>${item.Tel}</span></td>
+            //              <td data-th="店家簡介"><span>${item.HostWords}</span></td>
+            //         </tr>
+            //         `
+            //     $("#mytablebody").append( strHTML );
+            // });
+            data.forEach(function(item){
+                console.log(item.Name);
+                console.log("地址：" + item.City + item.Town + item.Address);
+
+                // 資料防呆
+                let img = item.PicURL ? item.PicURL : "images/dog03.avif";
+                let tel = item.Tel ? item.Tel : "店家未提供";
+                let hword = item.HostWords ? item.HostWords : "店家未提供簡介";
+
+                let strHTML = `
+                    <tr>
+                         <td data-th="店家編號"><span>${item.ID}</span></td>
+                         <td data-th="店家圖片">
+                             <span><img src="${img}" width="200px" alt=""></span>
+                         </td>
+                         <td data-th="店家名稱"><span>${item.Name}</span></td>
+                         <td data-th="店家地址"><span>${item.City + item.Town + item.Address}</span></td>
+                         <td data-th="店家電話"><span>${tel}</span></td>
+                         <td data-th="店家簡介"><span>${hword}</span></td>
+                    </tr>
+                    `
+                $("#mytablebody").append( strHTML );
+            });
+        }
+    </script>
+</body>
+</html>
